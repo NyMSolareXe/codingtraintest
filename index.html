@@ -28,14 +28,21 @@
 
     <script>
       function setup() {
-        let lat, lon, inputbox;
+        noCanvas();
+        const video = createCapture(VIDEO);
+        video.size(320, 240);
+        let lat, lon;
         const button = document.getElementById("submit");
 
         button.addEventListener("click", async event => {
-          inputbox = document.getElementById("mymilo").value;
-          const data = { lat, lon };
-          data.name = inputbox;
-          console.log(data);
+          const mood = document.getElementById("mymilo").value;
+          //   inputbox = document.getElementById("mymilo").value;
+          video.loadPixels();
+          const image64 = video.canvas.toDataURL();
+          const data = { lat, lon, mood, image64 };
+          //   data.name = inputbox;
+
+          //   console.log(data);
           const options = {
             method: "POST",
             headers: {
@@ -59,13 +66,6 @@
         } else {
           console.log("geolocation is not available");
         }
-
-
-        noCanvas();
-        const video = createCapture(VIDEO);
-        video.size(320,240);
-
-
       }
     </script>
   </body>
